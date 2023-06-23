@@ -6,3 +6,16 @@ Content-Type: application/json
   "email": "woojkk@naver.com",
   "password": "6877"
 }
+
+### create account
+POST http://localhost:8080/account/create
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "initialBalance": 0,
+  "accountPassword": "0000",
+  "bank":  "KB",
+  "accountType": "DEPOSIT",
+  "setLimit": 50000000
+}

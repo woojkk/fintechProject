@@ -1,5 +1,6 @@
 package woojkk.fintechProject.domain;
 
+import java.util.Locale;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import lombok.AllArgsConstructor;
@@ -29,7 +30,7 @@ public class AccountUser extends BaseEntity {
 
   public static AccountUser from(LoginForm form) {
     return AccountUser.builder()
-        .email(form.getEmail())
+        .email(form.getEmail().toLowerCase(Locale.ROOT))
         .password(form.getPassword())
         .build();
   }
