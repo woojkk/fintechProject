@@ -8,14 +8,14 @@ Content-Type: application/json
 }
 
 ### create account
-POST http://localhost:8080/account/create
+POST http://localhost:8080/account
 Content-Type: application/json
 
 {
   "userId": 1,
-  "initialBalance": 0,
   "accountPassword": "0000",
   "bank":  "KB",
-  "accountType": "DEPOSIT",
-  "setLimit": 50000000
+  "initialBalance": 0,
+  "setLimit": 50000000,
+  "accountType": "DEPOSIT"
 }

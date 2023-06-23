@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import woojkk.fintechProject.domain.Account;
 import woojkk.fintechProject.domain.AccountUser;
-import woojkk.fintechProject.dto.AccountDto;
 import woojkk.fintechProject.exception.AccountException;
 import woojkk.fintechProject.exception.ErrorCode;
 import woojkk.fintechProject.repository.AccountRepository;
@@ -20,14 +19,14 @@ import woojkk.fintechProject.type.Bank;
 @RequiredArgsConstructor
 public class AccountService {
 
-  private final AccountUserRepository accountUserRepository;
-  private final AccountRepository accountRepository;
   private static final int ACCOUNT_NUMBER_LENGTH = 10;
 
+  private final AccountUserRepository accountUserRepository;
+  private final AccountRepository accountRepository;
+
   @Transactional
-  public AccountDto createAccount(Long userId, Long initialBalance, String accountPassword,
-      Bank bank,
-      AccountType accountType, Long setLimit) {
+  public Account createAccount(Long userId, Long initialBalance, String accountPassword,
+      Bank bank, AccountType accountType, Long setLimit) {
     AccountUser accountUser = accountUserRepository.findById(userId)
         .orElseThrow(() -> new AccountException(ErrorCode.LOGIN_CHECK_FAIL));
 
@@ -39,18 +38,18 @@ public class AccountService {
       newAccountNumber = getRandomAccountNumber();
     } while (accountRepository.existsByAccountNumber(newAccountNumber));
 
-    return AccountDto.fromEntity(
-        accountRepository.save(Account.builder()
-            .accountUser(accountUser)
-            .bank(bank)
-            .accountPassword(accountPassword)
-            .accountType(accountType)
-            .accountNumber(newAccountNumber)
-            .accountStatus(AccountStatus.IN_USE)
-            .setLimit(setLimit)
-            .balance(initialBalance)
-            .registeredAt(LocalDateTime.now())
-            .build()));
+    return accountRepository.save(Account.builder()
+        .accountUser(accountUser)
+        .accountPassword(accountPassword)
+        .bank(bank)
+        .accountNumber(newAccountNumber)
+        .balance(initialBalance)
+        .setLimit(setLimit)
+        .accountType(accountType)
+        .accountStatus(AccountStatus.IN_USE)
+        .registeredAt(LocalDateTime.now())
+        .unRegisteredAt(LocalDateTime.now())
+        .build());
 
   }
 
