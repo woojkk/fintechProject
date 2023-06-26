@@ -19,7 +19,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import woojkk.fintechProject.domain.Account;
-import woojkk.fintechProject.dto.AccountDto;
+import woojkk.fintechProject.dto.CreateAccountDto;
 import woojkk.fintechProject.service.AccountService;
 import woojkk.fintechProject.type.AccountStatus;
 import woojkk.fintechProject.type.AccountType;
@@ -42,32 +42,28 @@ class AccountControllerTest {
     //given
     given(accountService.createAccount(anyLong(), anyLong(), any(), any(), any(), anyLong()))
         .willReturn(Account.builder()
-            .id(1L)
-            .accountPassword("5678")
             .bank(Bank.KB)
-            .accountNumber("1234567890")
-            .balance(0L)
-            .setLimit(30000000L)
             .accountType(AccountType.DEPOSIT)
+            .balance(0L)
+            .accountNumber("1234567890")
             .accountStatus(AccountStatus.IN_USE)
+            .setLimit(30000000L)
             .registeredAt(LocalDateTime.now())
-            .unRegisteredAt(LocalDateTime.now())
             .build());
     //when
     //then
     mockMvc.perform(post("/account")
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(
-                new AccountDto.Request(3333L, "1234",  WOO_RI,
-                    10L,50000000L, INSTALLMENT_SAVING)
+                new CreateAccountDto.Request("1234", WOO_RI,
+                    10L, 50000000L, INSTALLMENT_SAVING)
             )))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.accountId").value(1))
         .andExpect(jsonPath("$.bank").value(Bank.KB.name()))
-        .andExpect(jsonPath("$.accountNumber").value("1234567890"))
-        .andExpect(jsonPath("$.initialBalance").value(0))
-        .andExpect(jsonPath("$.setLimit").value(30000000L))
         .andExpect(jsonPath("$.accountType").value(AccountType.DEPOSIT.name()))
+        .andExpect(jsonPath("$.initialBalance").value(0))
+        .andExpect(jsonPath("$.accountNumber").value("1234567890"))
+        .andExpect(jsonPath("$.setLimit").value(30000000L))
         .andExpect(jsonPath("$.accountStatus").value(AccountStatus.IN_USE.name()))
         .andDo(print());
   }

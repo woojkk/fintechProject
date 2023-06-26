@@ -30,7 +30,7 @@ public class AccountService {
     AccountUser accountUser = accountUserRepository.findById(userId)
         .orElseThrow(() -> new AccountException(ErrorCode.LOGIN_CHECK_FAIL));
 
-    validateCreateAccount(accountUser, accountType);
+    validateCreateAccount(accountUser, accountType, bank);
 
     String newAccountNumber;
 
@@ -48,9 +48,7 @@ public class AccountService {
         .accountType(accountType)
         .accountStatus(AccountStatus.IN_USE)
         .registeredAt(LocalDateTime.now())
-        .unRegisteredAt(LocalDateTime.now())
         .build());
-
   }
 
   private String getRandomAccountNumber() {
@@ -61,9 +59,10 @@ public class AccountService {
     return onlyNumber.substring(0, ACCOUNT_NUMBER_LENGTH);
   }
 
-  private void validateCreateAccount(AccountUser accountUser, AccountType accountType) {
+  private void validateCreateAccount(AccountUser accountUser, AccountType accountType, Bank bank) {
     Integer accountTypeCount =
-        accountRepository.countByAccountUserAndAccountType(accountUser, accountType);
+        accountRepository.countByAccountUserAndAccountTypeAndBank(accountUser, accountType, bank);
+
     if (accountTypeCount >= 5) {
       throw new AccountException(ErrorCode.MAX_COUNT_PER_USER);
     }

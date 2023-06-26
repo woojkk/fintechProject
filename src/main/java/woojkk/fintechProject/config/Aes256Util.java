@@ -1,16 +1,17 @@
 package woojkk.fintechProject.config;
 
-import java.nio.charset.StandardCharsets;
+import org.apache.tomcat.util.codec.binary.Base64;
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import org.apache.tomcat.util.codec.binary.Base64;
+import java.nio.charset.StandardCharsets;
 
 public class Aes256Util {
 
   public static String algorithms = "AES/CBC/PKCS5Padding";
 
-  private static final String KEY = "WOOJKKKEYISWOOJKKKEY";
+  private static final String KEY = "WOOJKKIMKEYISWOOJKKIMKEY";
   private static final String IV = KEY.substring(0, 16);
 
   public static String encrypt(String text) {
