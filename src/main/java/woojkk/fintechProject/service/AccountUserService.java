@@ -23,7 +23,6 @@ public class AccountUserService {
     }
   }
 
-
   public Optional<AccountUser> findByIdAndEmail(Long id, String email) {
     return accountUserRepository.findById(id)
         .stream().filter(accountUser -> accountUser.getEmail()

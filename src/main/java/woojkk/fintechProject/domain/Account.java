@@ -1,12 +1,16 @@
 package woojkk.fintechProject.domain;
 
 import java.time.LocalDateTime;
-import java.util.Locale;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,7 +19,9 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import woojkk.fintechProject.dto.LoginForm;
+import woojkk.fintechProject.type.AccountStatus;
+import woojkk.fintechProject.type.AccountType;
+import woojkk.fintechProject.type.Bank;
 
 @Getter
 @Setter
@@ -24,26 +30,32 @@ import woojkk.fintechProject.dto.LoginForm;
 @Builder
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class AccountUser {
+@Table(name = "account", indexes = @Index(name = "idxAccountNumber", columnList = "accountNumber"))
+public class Account {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private String name;
+  @ManyToOne
+  private AccountUser accountUser;
+  private String accountPassword;
+  @Enumerated(EnumType.STRING)
+  private Bank bank;
+  private String accountNumber;
+  private Long balance;
+  private Long setLimit;
+  @Enumerated(EnumType.STRING)
+  private AccountType accountType;
+  @Enumerated(EnumType.STRING)
+  private AccountStatus accountStatus;
 
-  private String password;
-
-  private String email;
+  private LocalDateTime registeredAt;
+  private LocalDateTime unRegisteredAt;
 
   @CreatedDate
   private LocalDateTime createdAt;
   @LastModifiedDate
   private LocalDateTime updatedAt;
 
-  public static AccountUser from(LoginForm form) {
-    return AccountUser.builder()
-        .email(form.getEmail().toLowerCase(Locale.ROOT))
-        .password(form.getPassword())
-        .build();
-  }
 }

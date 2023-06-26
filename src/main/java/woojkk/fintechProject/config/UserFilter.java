@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 import woojkk.fintechProject.domain.UserVo;
 import woojkk.fintechProject.service.AccountUserService;
 
-@WebFilter(urlPatterns = "/user/*")
+@WebFilter(urlPatterns = "/account/*")
 @RequiredArgsConstructor
 public class UserFilter implements Filter {
 
@@ -34,7 +34,7 @@ public class UserFilter implements Filter {
 
     UserVo vo = provider.getUserVo(token);
 
-    accountUserService.findByIdAndEmail(vo.getGetId(), vo.getGetEmail())
+    accountUserService.findByIdAndEmail(vo.getId(), vo.getEmail())
         .orElseThrow(() -> new ServletException("Invalid Access"));
     chain.doFilter(request, response);
 
