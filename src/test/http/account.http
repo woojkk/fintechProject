@@ -1,21 +1,33 @@
-### login
+### Login
 POST http://localhost:8080/login
 Content-Type: application/json
 
 {
-  "email": "woojkk@naver.com",
-  "password": "6877"
+  "email": "test@naver.com",
+  "password": "4416"
 }
 
-### create account
+### Create account
 POST http://localhost:8080/account
 Content-Type: application/json
+X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iLCJqdGkiOiI3K3dXQnczZmFwd2xZcDV3YXZnTTd3PT0iLCJpYXQiOjE2ODc4NzAyMjksImV4cCI6MTY4Nzg3MjAyOX0.VMvGt2xZa1ChFoi-Koa36PXkaoG4YZnUD8KQzdGvQ70
 
 {
-  "userId": 1,
   "accountPassword": "0000",
-  "bank":  "KB",
+  "bank":  "SHIN_HAN",
   "initialBalance": 0,
   "setLimit": 50000000,
-  "accountType": "DEPOSIT"
+  "accountType": "INSTALLMENT_SAVING"
+}
+
+### Delete account
+DELETE http://localhost:8080/account
+Content-Type: application/json
+X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iLCJqdGkiOiI3K3dXQnczZmFwd2xZcDV3YXZnTTd3PT0iLCJpYXQiOjE2ODc4NzAyMjksImV4cCI6MTY4Nzg3MjAyOX0.VMvGt2xZa1ChFoi-Koa36PXkaoG4YZnUD8KQzdGvQ70
+
+{
+  "accountPassword": "0000",
+  "accountNumber": "2442604468",
+  "bank":  "SHIN_HAN",
+  "accountType": "INSTALLMENT_SAVING"
 }
