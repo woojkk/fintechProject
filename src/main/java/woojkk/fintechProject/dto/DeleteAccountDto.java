@@ -16,6 +16,7 @@ public class DeleteAccountDto {
 
   @Getter
   @Setter
+  @NoArgsConstructor
   @AllArgsConstructor
   public static class Request {
 

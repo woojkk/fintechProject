@@ -111,7 +111,7 @@ public class AccountService {
     account.setAccountStatus(AccountStatus.UNREGISTERED);
     account.setUnRegisteredAt(LocalDateTime.now());
 
-    return accountRepository.save(account);
+    return account;
   }
 
   private boolean checkPassword(Account account, String password) {

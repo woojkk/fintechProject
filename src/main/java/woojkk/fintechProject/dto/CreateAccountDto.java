@@ -17,6 +17,7 @@ public class CreateAccountDto {
 
   @Getter
   @Setter
+  @NoArgsConstructor
   @AllArgsConstructor
   public static class Request {
 

@@ -125,16 +125,14 @@ class AccountServiceTest {
             .accountType(DEPOSIT)
             .build()));
     //when
-    ArgumentCaptor<Account> captor = ArgumentCaptor.forClass(Account.class);
 
-    accountService.deleteAccount(1L, "1000000000", "1", HA_NA, DEPOSIT);
+    Account deleteAccount = accountService.deleteAccount(1L, "1000000000", "1", HA_NA, DEPOSIT);
 
     //then
-    verify(accountRepository, times(1)).save(captor.capture());
-    assertEquals("1234567890", captor.getValue().getAccountNumber());
-    assertEquals(HA_NA, captor.getValue().getBank());
-    assertEquals(DEPOSIT, captor.getValue().getAccountType());
-    assertEquals(AccountStatus.UNREGISTERED, captor.getValue().getAccountStatus());
+    assertEquals("1234567890", deleteAccount.getAccountNumber());
+    assertEquals(HA_NA, deleteAccount.getBank());
+    assertEquals(DEPOSIT, deleteAccount.getAccountType());
+    assertEquals(AccountStatus.UNREGISTERED, deleteAccount.getAccountStatus());
   }
 
 
