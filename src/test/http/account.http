@@ -10,11 +10,11 @@ Content-Type: application/json
 ### Create account
 POST http://localhost:8080/account
 Content-Type: application/json
-X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iLCJqdGkiOiI3K3dXQnczZmFwd2xZcDV3YXZnTTd3PT0iLCJpYXQiOjE2ODc4NzAyMjksImV4cCI6MTY4Nzg3MjAyOX0.VMvGt2xZa1ChFoi-Koa36PXkaoG4YZnUD8KQzdGvQ70
+X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iLCJqdGkiOiI3K3dXQnczZmFwd2xZcDV3YXZnTTd3PT0iLCJpYXQiOjE2ODg0ODU1NDksImV4cCI6MTY4ODQ4NzM0OX0.R2wipaH6AMeaWqawHgMusFeHjQTQ7vDRanU9W4VCZ1M
 
 {
   "accountPassword": "0000",
-  "bank":  "SHIN_HAN",
+  "bank":  "NH",
   "initialBalance": 0,
   "setLimit": 50000000,
   "accountType": "INSTALLMENT_SAVING"
@@ -23,11 +23,23 @@ X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iL
 ### Delete account
 DELETE http://localhost:8080/account
 Content-Type: application/json
-X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iLCJqdGkiOiI3K3dXQnczZmFwd2xZcDV3YXZnTTd3PT0iLCJpYXQiOjE2ODc4NzAyMjksImV4cCI6MTY4Nzg3MjAyOX0.VMvGt2xZa1ChFoi-Koa36PXkaoG4YZnUD8KQzdGvQ70
+X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iLCJqdGkiOiI3K3dXQnczZmFwd2xZcDV3YXZnTTd3PT0iLCJpYXQiOjE2ODg0ODU1NDksImV4cCI6MTY4ODQ4NzM0OX0.R2wipaH6AMeaWqawHgMusFeHjQTQ7vDRanU9W4VCZ1M
 
 {
   "accountPassword": "0000",
-  "accountNumber": "2442604468",
-  "bank":  "SHIN_HAN",
+  "accountNumber": "5218317460",
+  "bank":  "NH",
   "accountType": "INSTALLMENT_SAVING"
 }
+
+### Search account
+GET http://localhost:8080/account?user_id=2
+Content-Type: application/json
+X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iLCJqdGkiOiI3K3dXQnczZmFwd2xZcDV3YXZnTTd3PT0iLCJpYXQiOjE2ODg1MzAzODksImV4cCI6MTY4ODUzMjE4OX0.sRTyC5EKdyTDPm6NHmNeBFKhqUhbARHa2AWcf_ZRkpA
+
+
+### Search account (Bank)
+GET http://localhost:8080/account/2/bank?bank=KB
+Content-Type: application/json
+X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iLCJqdGkiOiI3K3dXQnczZmFwd2xZcDV3YXZnTTd3PT0iLCJpYXQiOjE2ODg1MzAzODksImV4cCI6MTY4ODUzMjE4OX0.sRTyC5EKdyTDPm6NHmNeBFKhqUhbARHa2AWcf_ZRkpA
+

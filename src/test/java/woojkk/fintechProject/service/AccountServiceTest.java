@@ -12,10 +12,13 @@ import static woojkk.fintechProject.type.AccountType.DEPOSIT;
 import static woojkk.fintechProject.type.AccountType.INSTALLMENT_SAVING;
 import static woojkk.fintechProject.type.Bank.HA_NA;
 import static woojkk.fintechProject.type.Bank.KB;
+import static woojkk.fintechProject.type.Bank.NH;
 import static woojkk.fintechProject.type.Bank.SHIN_HAN;
 import static woojkk.fintechProject.type.Bank.WOO_RI;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -125,16 +128,14 @@ class AccountServiceTest {
             .accountType(DEPOSIT)
             .build()));
     //when
-    ArgumentCaptor<Account> captor = ArgumentCaptor.forClass(Account.class);
 
-    accountService.deleteAccount(1L, "1000000000", "1", HA_NA, DEPOSIT);
+    Account deleteAccount = accountService.deleteAccount(1L, "1000000000", "1", HA_NA, DEPOSIT);
 
     //then
-    verify(accountRepository, times(1)).save(captor.capture());
-    assertEquals("1234567890", captor.getValue().getAccountNumber());
-    assertEquals(HA_NA, captor.getValue().getBank());
-    assertEquals(DEPOSIT, captor.getValue().getAccountType());
-    assertEquals(AccountStatus.UNREGISTERED, captor.getValue().getAccountStatus());
+    assertEquals("1234567890", deleteAccount.getAccountNumber());
+    assertEquals(HA_NA, deleteAccount.getBank());
+    assertEquals(DEPOSIT, deleteAccount.getAccountType());
+    assertEquals(AccountStatus.UNREGISTERED, deleteAccount.getAccountStatus());
   }
 
 
@@ -289,5 +290,100 @@ class AccountServiceTest {
             SHIN_HAN, DEPOSIT));
     //then
     assertEquals(ErrorCode.NOT_MATCHED_PASSWORD, exception.getErrorCode());
+  }
+
+  @Test
+  void successGetAccountsByUserId() {
+      //given
+    AccountUser user = AccountUser.builder()
+        .name("kim")
+        .email("w@naver.com")
+        .password("1")
+        .build();
+
+    List<Account> accounts = Arrays.asList(
+        Account.builder()
+            .accountUser(user)
+            .accountNumber("1111111111")
+            .bank(KB)
+            .build(),
+        Account.builder()
+            .accountUser(user)
+            .accountNumber("2222222222")
+            .bank(NH)
+            .build(),
+        Account.builder()
+            .accountUser(user)
+            .accountNumber("3333333333")
+            .bank(SHIN_HAN)
+            .build()
+    );
+    given(accountUserRepository.findById(anyLong()))
+        .willReturn(Optional.of(user));
+    given(accountRepository.findByAccountUser(any()))
+        .willReturn(accounts);
+      //when
+    List<Account> accountList = accountService.getAccountsByUserId(1L);
+    //then
+    assertEquals(3, accountList.size());
+    assertEquals(KB, accountList.get(0).getBank());
+    assertEquals(NH, accountList.get(1).getBank());
+    assertEquals(SHIN_HAN, accountList.get(2).getBank());
+    assertEquals("1111111111", accountList.get(0).getAccountNumber());
+    assertEquals("2222222222", accountList.get(1).getAccountNumber());
+    assertEquals("3333333333", accountList.get(2).getAccountNumber());
+
+  }
+
+  @Test
+  void failedGetAccountsByUserId() {
+      //given
+    given(accountUserRepository.findById(anyLong()))
+        .willReturn(Optional.empty());
+      //when
+    AccountException exception = assertThrows(AccountException.class,
+        () -> accountService.getAccountsByUserId(1L));
+    //then
+    assertEquals(ErrorCode.NOT_FOUND_USER, exception.getErrorCode());
+  }
+
+  @Test
+  void successGetAccountsByUserIdAndBank() {
+    //given
+    AccountUser user = AccountUser.builder()
+        .name("kim")
+        .email("w@naver.com")
+        .password("1")
+        .build();
+
+    List<Account> accounts = Arrays.asList(
+        Account.builder()
+            .accountUser(user)
+            .accountNumber("1111111111")
+            .bank(KB)
+            .build(),
+        Account.builder()
+            .accountUser(user)
+            .accountNumber("2222222222")
+            .bank(NH)
+            .build(),
+        Account.builder()
+            .accountUser(user)
+            .accountNumber("3333333333")
+            .bank(KB)
+            .build()
+    );
+    given(accountUserRepository.findById(anyLong()))
+        .willReturn(Optional.of(user));
+    given(accountRepository.findByAccountUserAndBank(any(),any()))
+        .willReturn(accounts);
+    //when
+    List<Account> accountList = accountService.getAccountsByUserIdAndBank(1L, KB);
+    //then
+    assertEquals(2, accountList.size());
+    assertEquals(KB, accountList.get(0).getBank());
+    assertEquals("1111111111", accountList.get(0).getAccountNumber());
+    assertEquals("3333333333", accountList.get(1).getAccountNumber());
+
   }
 }

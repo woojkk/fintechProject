@@ -1,8 +1,10 @@
 package woojkk.fintechProject.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -111,11 +113,26 @@ public class AccountService {
     account.setAccountStatus(AccountStatus.UNREGISTERED);
     account.setUnRegisteredAt(LocalDateTime.now());
 
-    return accountRepository.save(account);
+    return account;
   }
 
   private boolean checkPassword(Account account, String password) {
     return account.getAccountPassword().equals(password);
   }
 
+  public List<Account> getAccountsByUserId(Long userId) {
+    AccountUser accountUser = accountUserRepository.findById(userId)
+        .orElseThrow(() -> new AccountException(ErrorCode.NOT_FOUND_USER));
+
+    return accountRepository.findByAccountUser(accountUser);
+  }
+
+  public List<Account> getAccountsByUserIdAndBank(Long userId, Bank bank) {
+    AccountUser accountUser = accountUserRepository.findById(userId)
+        .orElseThrow(() -> new AccountException(ErrorCode.NOT_FOUND_USER));
+
+    return accountRepository.findByAccountUserAndBank(accountUser, bank)
+        .stream().filter(account -> account.getBank() == bank)
+        .collect(Collectors.toList());
+  }
 }
