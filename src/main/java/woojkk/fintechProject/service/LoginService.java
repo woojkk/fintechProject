@@ -18,7 +18,7 @@ public class LoginService {
 
   public String userLoginToken(LoginForm form) {
     AccountUser loginCheck = accountUserService.findValidAccountUser(form.getEmail(), form.getPassword())
-        .orElseThrow(() -> new AccountException(ErrorCode.LOGIN_CHECK_FAIL));
+        .orElseThrow(() -> new AccountException(ErrorCode.NOT_FOUND_USER));
 
     return provider.createToken(
         loginCheck.getEmail(),

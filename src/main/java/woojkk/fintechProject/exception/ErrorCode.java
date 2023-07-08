@@ -8,8 +8,12 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum ErrorCode {
   NOT_FOUND_USER(HttpStatus.BAD_REQUEST, "일치하는 회원이 없습니다."),
-  MAX_COUNT_PER_USER(HttpStatus.BAD_REQUEST, "해당은행의 해당종류 계좌는 최대 5개까지 생성 가능합니다."),
-  LOGIN_CHECK_FAIL(HttpStatus.BAD_REQUEST, "아이디 또는 패스워드를 확인해주세요.");
+  NOT_FOUND_ACCOUNT(HttpStatus.BAD_REQUEST, "일치하는 계좌가 없습니다."),
+  BALANCE_NOT_EMPTY(HttpStatus.BAD_REQUEST, "계좌에 잔액이 남아있어 해지할 수 없습니다."),
+  ALREADY_UNREGISTERED_ACCOUNT(HttpStatus.BAD_REQUEST, "이미 해지되 계좌입니다."),
+  ACCOUNT_USER_UNMATCHED(HttpStatus.BAD_REQUEST, "사용자와 계좌의 소유주가 다릅니다."),
+  NOT_MATCHED_PASSWORD(HttpStatus.BAD_REQUEST, "계좌 비밀번호가 일치하지 않습니다."),
+  MAX_COUNT_PER_USER(HttpStatus.BAD_REQUEST, "해당은행의 해당종류 계좌는 최대 5개까지 생성 가능합니다.");
 
 
 

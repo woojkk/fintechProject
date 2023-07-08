@@ -1,7 +1,6 @@
 package woojkk.fintechProject.dto;
 
 import java.time.LocalDateTime;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +12,7 @@ import woojkk.fintechProject.type.AccountStatus;
 import woojkk.fintechProject.type.AccountType;
 import woojkk.fintechProject.type.Bank;
 
-public class CreateAccountDto {
+public class DeleteAccountDto {
 
   @Getter
   @Setter
@@ -26,14 +25,10 @@ public class CreateAccountDto {
     private String accountPassword;
 
     @NotNull
+    private String accountNumber;
+
+    @NotNull
     private Bank bank;
-
-    @NotNull
-    private Long initialBalance;
-
-    @NotNull
-    @Max(100000000)
-    private Long setLimit;
 
     @NotNull
     private AccountType accountType;
@@ -48,21 +43,17 @@ public class CreateAccountDto {
   public static class Response {
     private Bank bank;
     private String accountNumber;
-    private Long initialBalance;
-    private Long setLimit;
     private AccountType accountType;
     private AccountStatus accountStatus;
-    private LocalDateTime registeredAt;
+    private LocalDateTime unRegisteredAt;
 
     public static Response from(Account account) {
       return Response.builder()
           .bank(account.getBank())
-          .accountType(account.getAccountType())
-          .initialBalance(account.getBalance())
           .accountNumber(account.getAccountNumber())
+          .accountType(account.getAccountType())
           .accountStatus(account.getAccountStatus())
-          .setLimit(account.getSetLimit())
-          .registeredAt(account.getRegisteredAt())
+          .unRegisteredAt(account.getUnRegisteredAt())
           .build();
     }
   }
