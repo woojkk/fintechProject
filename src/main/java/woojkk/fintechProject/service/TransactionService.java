@@ -27,26 +27,14 @@ public class TransactionService {
   private final AccountRepository accountRepository;
   private final JwtAuthenticationProvider provider;
 
-  public boolean validateToken(Long accountId, String token) {
+  public void validateToken(Long accountId, String password, TransactionType transactionType,
+      Long amount, String token) {
     Account account = accountRepository.findById(accountId)
         .orElseThrow(() -> new AccountException(ErrorCode.NOT_FOUND_ACCOUNT));
 
     UserVo vo = provider.getUserVo(token);
 
     if (!Objects.equals(account.getAccountUser().getId(), vo.getId())) {
-      throw new AccountException(ErrorCode.ACCOUNT_USER_UNMATCHED);
-    }
-    return true;
-  }
-
-  @Transactional
-  public Transaction drawMoney(Long accountId, String password, TransactionType transactionType,
-      Long amount, String token) {
-
-    Account account = accountRepository.findById(accountId)
-        .orElseThrow(() -> new AccountException(ErrorCode.NOT_FOUND_ACCOUNT));
-
-    if (!validateToken(accountId, token)) {
       throw new AccountException(ErrorCode.UNAUTHORIZED_TOKEN);
     }
 
@@ -66,6 +54,21 @@ public class TransactionService {
       throw new AccountException(ErrorCode.WITHDRAW_FAIL_INSUFFICIENT_BALANCE);
     }
 
+  }
+
+  @Transactional
+  public Transaction drawMoney(Long accountId, String password, TransactionType transactionType,
+      Long amount, String token) {
+
+    Account account = accountRepository.findById(accountId)
+        .orElseThrow(() -> new AccountException(ErrorCode.NOT_FOUND_ACCOUNT));
+
+    validateToken(accountId, password, transactionType, amount, token);
+
+    if (account.getBalance() < amount) {
+      throw new AccountException(ErrorCode.WITHDRAW_FAIL_INSUFFICIENT_BALANCE);
+    }
+
     account.setBalance(account.getBalance() - amount);
 
     return Transaction.builder()
@@ -75,7 +78,7 @@ public class TransactionService {
         .balance(account.getBalance())
         .amount(amount)
         .transactionResultType(TransactionResultType.SUCCESS)
-        .TransactedAt(LocalDateTime.now())
+        .transactedAt(LocalDateTime.now())
         .build();
 
   }
@@ -87,21 +90,7 @@ public class TransactionService {
     Account account = accountRepository.findById(accountId)
         .orElseThrow(() -> new AccountException(ErrorCode.NOT_FOUND_ACCOUNT));
 
-    if (!validateToken(accountId, token)) {
-      throw new AccountException(ErrorCode.UNAUTHORIZED_TOKEN);
-    }
-
-    if (account.getAccountStatus() == AccountStatus.UNREGISTERED) {
-      throw new AccountException(ErrorCode.ALREADY_UNREGISTERED_ACCOUNT);
-    }
-
-    if (!account.getAccountPassword().equals(password)) {
-      throw new AccountException(ErrorCode.NOT_MATCHED_PASSWORD);
-    }
-
-    if (transactionType != DEPOSIT) {
-      throw new AccountException(ErrorCode.NOT_MATCHED_TRANSACTION_TYPE);
-    }
+    validateToken(accountId, password, transactionType, amount, token);
 
     if (account.getBalance() + amount > account.getSetLimit()) {
       throw new AccountException(ErrorCode.ACCOUNT_LIMIT_EXCEEDED);
@@ -116,7 +105,7 @@ public class TransactionService {
         .balance(account.getBalance())
         .amount(amount)
         .transactionResultType(TransactionResultType.SUCCESS)
-        .TransactedAt(LocalDateTime.now())
+        .transactedAt(LocalDateTime.now())
         .build();
   }
 }

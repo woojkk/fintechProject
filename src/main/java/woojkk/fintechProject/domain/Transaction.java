@@ -46,5 +46,5 @@ public class Transaction {
 
   private Long balance;
 
-  private LocalDateTime TransactedAt;
+  private LocalDateTime transactedAt;
 }
