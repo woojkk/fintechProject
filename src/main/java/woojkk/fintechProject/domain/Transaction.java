@@ -15,6 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import woojkk.fintechProject.type.Bank;
 import woojkk.fintechProject.type.TransactionResultType;
 import woojkk.fintechProject.type.TransactionType;
 
@@ -34,7 +35,10 @@ public class Transaction {
   @ManyToOne
   private Account account;
 
-  private String accountNumber;
+  @Enumerated(EnumType.STRING)
+  private Bank receiverBank;
+
+  private String receiverAccountNumber;
 
   @Enumerated(EnumType.STRING)
   private TransactionType transactionType;

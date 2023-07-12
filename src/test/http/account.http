@@ -10,12 +10,12 @@ Content-Type: application/json
 ### Create account
 POST http://localhost:8080/account
 Content-Type: application/json
-X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iLCJqdGkiOiI3K3dXQnczZmFwd2xZcDV3YXZnTTd3PT0iLCJpYXQiOjE2ODg3OTA4NTksImV4cCI6MTY4ODc5MjY1OX0.6jO09HldHc_tzTi4GRF9FWJYBcakGVQGmDwk0ya3VbQ
+X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iLCJqdGkiOiI3K3dXQnczZmFwd2xZcDV3YXZnTTd3PT0iLCJpYXQiOjE2ODkxMzYwNjQsImV4cCI6MTY4OTEzNzg2NH0.LvT3YCOjPlYH2daZrIYhaQrEPuITjDZx7DuO7d8vzWc
 
 {
   "accountPassword": "0000",
   "bank":  "KB",
-  "initialBalance": 50000,
+  "initialBalance": 500000,
   "setLimit": 50000000,
   "accountType": "INSTALLMENT_SAVING"
 }
@@ -23,7 +23,7 @@ X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iL
 ### Delete account
 DELETE http://localhost:8080/account/1
 Content-Type: application/json
-X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iLCJqdGkiOiI3K3dXQnczZmFwd2xZcDV3YXZnTTd3PT0iLCJpYXQiOjE2ODg3NDI5NjEsImV4cCI6MTY4ODc0NDc2MX0.auQWGWbYoygXEQidd87wtEZ10AgP_RU47guSg_c9_A0
+X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iLCJqdGkiOiI3K3dXQnczZmFwd2xZcDV3YXZnTTd3PT0iLCJpYXQiOjE2ODg5NzQzNzgsImV4cCI6MTY4ODk3NjE3OH0.PmlRrdBDoyQsL_6MlZ0itZEZXGwOWLmZvYEHiZ5zH70
 
 {
   "accountPassword": "0000",
@@ -35,21 +35,21 @@ X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iL
 ### Search account
 GET http://localhost:8080/account?user_id=2
 Content-Type: application/json
-X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iLCJqdGkiOiI3K3dXQnczZmFwd2xZcDV3YXZnTTd3PT0iLCJpYXQiOjE2ODg3NDI5NjEsImV4cCI6MTY4ODc0NDc2MX0.auQWGWbYoygXEQidd87wtEZ10AgP_RU47guSg_c9_A0
+X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iLCJqdGkiOiI3K3dXQnczZmFwd2xZcDV3YXZnTTd3PT0iLCJpYXQiOjE2ODg5NzQzNzgsImV4cCI6MTY4ODk3NjE3OH0.PmlRrdBDoyQsL_6MlZ0itZEZXGwOWLmZvYEHiZ5zH70
 
 
 ### Search account (Bank)
 GET http://localhost:8080/account/2/bank?bank=KB
 Content-Type: application/json
-X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iLCJqdGkiOiI3K3dXQnczZmFwd2xZcDV3YXZnTTd3PT0iLCJpYXQiOjE2ODg3NDI5NjEsImV4cCI6MTY4ODc0NDc2MX0.auQWGWbYoygXEQidd87wtEZ10AgP_RU47guSg_c9_A0
+X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iLCJqdGkiOiI3K3dXQnczZmFwd2xZcDV3YXZnTTd3PT0iLCJpYXQiOjE2ODg5NzQzNzgsImV4cCI6MTY4ODk3NjE3OH0.PmlRrdBDoyQsL_6MlZ0itZEZXGwOWLmZvYEHiZ5zH70
 
 ### Withdaw money
-PUT http://localhost:8080/transaction/withdraw
+POST http://localhost:8080/transaction/withdraw
 Content-Type: application/json
-X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iLCJqdGkiOiI3K3dXQnczZmFwd2xZcDV3YXZnTTd3PT0iLCJpYXQiOjE2ODg3OTA4NTksImV4cCI6MTY4ODc5MjY1OX0.6jO09HldHc_tzTi4GRF9FWJYBcakGVQGmDwk0ya3VbQ
+X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iLCJqdGkiOiI3K3dXQnczZmFwd2xZcDV3YXZnTTd3PT0iLCJpYXQiOjE2ODkxMzYwNjQsImV4cCI6MTY4OTEzNzg2NH0.LvT3YCOjPlYH2daZrIYhaQrEPuITjDZx7DuO7d8vzWc
 
 {
-  "accountId": 1,
+  "accountId": 2,
   "accountPassword": "0000",
   "transactionType": "WITHDRAW",
   "amount":  50000
@@ -58,11 +58,31 @@ X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iL
 ### Deposit money
 POST http://localhost:8080/transaction/deposit
 Content-Type: application/json
-X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iLCJqdGkiOiI3K3dXQnczZmFwd2xZcDV3YXZnTTd3PT0iLCJpYXQiOjE2ODg3OTA4NTksImV4cCI6MTY4ODc5MjY1OX0.6jO09HldHc_tzTi4GRF9FWJYBcakGVQGmDwk0ya3VbQ
+X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iLCJqdGkiOiI3K3dXQnczZmFwd2xZcDV3YXZnTTd3PT0iLCJpYXQiOjE2ODkxMzYwNjQsImV4cCI6MTY4OTEzNzg2NH0.LvT3YCOjPlYH2daZrIYhaQrEPuITjDZx7DuO7d8vzWc
+
+{
+  "accountId": 2,
+  "accountPassword": "0000",
+  "transactionType": "DEPOSIT",
+  "amount":  1000000
+}
+
+### remittance money
+POST http://localhost:8080/transaction/remittance
+Content-Type: application/json
+X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iLCJqdGkiOiI3K3dXQnczZmFwd2xZcDV3YXZnTTd3PT0iLCJpYXQiOjE2ODkxMzYwNjQsImV4cCI6MTY4OTEzNzg2NH0.LvT3YCOjPlYH2daZrIYhaQrEPuITjDZx7DuO7d8vzWc
 
 {
   "accountId": 1,
   "accountPassword": "0000",
-  "transactionType": "DEPOSIT",
-  "amount":  100000
+  "bank": "KB",
+  "accountNumber": "9691324759",
+  "transactionType": "REMITTANCE",
+  "amount":  50000
 }
+
+
+### Search transaction
+GET http://localhost:8080/transaction/search/1
+Content-Type: application/json
+X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iLCJqdGkiOiI3K3dXQnczZmFwd2xZcDV3YXZnTTd3PT0iLCJpYXQiOjE2ODkxMzYwNjQsImV4cCI6MTY4OTEzNzg2NH0.LvT3YCOjPlYH2daZrIYhaQrEPuITjDZx7DuO7d8vzWc
