@@ -103,7 +103,7 @@ public class AccountService {
     }
 
     if (account.getBalance() > 0) {
-      throw new AccountException(ErrorCode.BALANCE_NOT_EMPTY);
+      throw new AccountException(ErrorCode.ACCOUNT_CLOSE_FAIL_REMAIN_BALANCE);
     }
 
     if (account.getBank() != bank || account.getAccountType() != accountType) {

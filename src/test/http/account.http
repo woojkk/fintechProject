@@ -10,36 +10,59 @@ Content-Type: application/json
 ### Create account
 POST http://localhost:8080/account
 Content-Type: application/json
-X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iLCJqdGkiOiI3K3dXQnczZmFwd2xZcDV3YXZnTTd3PT0iLCJpYXQiOjE2ODg0ODU1NDksImV4cCI6MTY4ODQ4NzM0OX0.R2wipaH6AMeaWqawHgMusFeHjQTQ7vDRanU9W4VCZ1M
+X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iLCJqdGkiOiI3K3dXQnczZmFwd2xZcDV3YXZnTTd3PT0iLCJpYXQiOjE2ODg3OTA4NTksImV4cCI6MTY4ODc5MjY1OX0.6jO09HldHc_tzTi4GRF9FWJYBcakGVQGmDwk0ya3VbQ
 
 {
   "accountPassword": "0000",
-  "bank":  "NH",
-  "initialBalance": 0,
+  "bank":  "KB",
+  "initialBalance": 50000,
   "setLimit": 50000000,
   "accountType": "INSTALLMENT_SAVING"
 }
 
 ### Delete account
-DELETE http://localhost:8080/account
+DELETE http://localhost:8080/account/1
 Content-Type: application/json
-X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iLCJqdGkiOiI3K3dXQnczZmFwd2xZcDV3YXZnTTd3PT0iLCJpYXQiOjE2ODg0ODU1NDksImV4cCI6MTY4ODQ4NzM0OX0.R2wipaH6AMeaWqawHgMusFeHjQTQ7vDRanU9W4VCZ1M
+X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iLCJqdGkiOiI3K3dXQnczZmFwd2xZcDV3YXZnTTd3PT0iLCJpYXQiOjE2ODg3NDI5NjEsImV4cCI6MTY4ODc0NDc2MX0.auQWGWbYoygXEQidd87wtEZ10AgP_RU47guSg_c9_A0
 
 {
   "accountPassword": "0000",
-  "accountNumber": "5218317460",
-  "bank":  "NH",
+  "accountNumber": "9320255994",
+  "bank":  "KB",
   "accountType": "INSTALLMENT_SAVING"
 }
 
 ### Search account
 GET http://localhost:8080/account?user_id=2
 Content-Type: application/json
-X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iLCJqdGkiOiI3K3dXQnczZmFwd2xZcDV3YXZnTTd3PT0iLCJpYXQiOjE2ODg1MzAzODksImV4cCI6MTY4ODUzMjE4OX0.sRTyC5EKdyTDPm6NHmNeBFKhqUhbARHa2AWcf_ZRkpA
+X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iLCJqdGkiOiI3K3dXQnczZmFwd2xZcDV3YXZnTTd3PT0iLCJpYXQiOjE2ODg3NDI5NjEsImV4cCI6MTY4ODc0NDc2MX0.auQWGWbYoygXEQidd87wtEZ10AgP_RU47guSg_c9_A0
 
 
 ### Search account (Bank)
 GET http://localhost:8080/account/2/bank?bank=KB
 Content-Type: application/json
-X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iLCJqdGkiOiI3K3dXQnczZmFwd2xZcDV3YXZnTTd3PT0iLCJpYXQiOjE2ODg1MzAzODksImV4cCI6MTY4ODUzMjE4OX0.sRTyC5EKdyTDPm6NHmNeBFKhqUhbARHa2AWcf_ZRkpA
+X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iLCJqdGkiOiI3K3dXQnczZmFwd2xZcDV3YXZnTTd3PT0iLCJpYXQiOjE2ODg3NDI5NjEsImV4cCI6MTY4ODc0NDc2MX0.auQWGWbYoygXEQidd87wtEZ10AgP_RU47guSg_c9_A0
 
+### Withdaw money
+PUT http://localhost:8080/transaction/withdraw
+Content-Type: application/json
+X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iLCJqdGkiOiI3K3dXQnczZmFwd2xZcDV3YXZnTTd3PT0iLCJpYXQiOjE2ODg3OTA4NTksImV4cCI6MTY4ODc5MjY1OX0.6jO09HldHc_tzTi4GRF9FWJYBcakGVQGmDwk0ya3VbQ
+
+{
+  "accountId": 1,
+  "accountPassword": "0000",
+  "transactionType": "WITHDRAW",
+  "amount":  50000
+}
+
+### Deposit money
+POST http://localhost:8080/transaction/deposit
+Content-Type: application/json
+X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPOCs1ZVE1UFdTZ1FQb0JpVHdOenBRPT0iLCJqdGkiOiI3K3dXQnczZmFwd2xZcDV3YXZnTTd3PT0iLCJpYXQiOjE2ODg3OTA4NTksImV4cCI6MTY4ODc5MjY1OX0.6jO09HldHc_tzTi4GRF9FWJYBcakGVQGmDwk0ya3VbQ
+
+{
+  "accountId": 1,
+  "accountPassword": "0000",
+  "transactionType": "DEPOSIT",
+  "amount":  100000
+}
